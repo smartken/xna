@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.SpinPaint", "Kull.SpinPaint\Kull.SpinPaint\Kull.SpinPaint.csproj", "{868AD76E-1D1C-4932-9CDC-DA46419981CA}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Kull.SpinPaintContent", "Kull.SpinPaint\Kull.SpinPaintContent\Kull.SpinPaintContent.contentproj", "{BA277B23-20A3-44CE-9F24-71AC94267FCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{868AD76E-1D1C-4932-9CDC-DA46419981CA}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{BA277B23-20A3-44CE-9F24-71AC94267FCC}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{BA277B23-20A3-44CE-9F24-71AC94267FCC}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

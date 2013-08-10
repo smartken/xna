@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.PhreeCell", "Kull.PhreeCell\Kull.PhreeCell\Kull.PhreeCell.csproj", "{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Kull.PhreeCellContent", "Kull.PhreeCell\Kull.PhreeCellContent\Kull.PhreeCellContent.contentproj", "{18B5C928-FF50-4D13-B944-F6AF958377BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{6FDD6DB8-9B7D-4DC2-BB55-FD2F77B244F7}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{18B5C928-FF50-4D13-B944-F6AF958377BB}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{18B5C928-FF50-4D13-B944-F6AF958377BB}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
