@@ -15,10 +15,25 @@ namespace Kull.PhreeCell
     /// <summary>
     /// 这是游戏的主类型
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public partial class Game1 : Microsoft.Xna.Framework.Game
     {
+        static readonly TimeSpan AutoMoveDuration = TimeSpan.FromSeconds(0.25);
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        CongratulationsComponent congratsComponent;
+        Texture2D cards, surface;
+        Rectangle[] cardSpots = new Rectangle[16];
+
+        Matrix displayMatrix, inverseMatrix;
+        CardInfo[] deck = new CardInfo[52], holds = new CardInfo[4];
+        List<CardInfo>[] piles = new List<CardInfo>[8], finals = new List<CardInfo>[4];
+
+        bool firstDragInGesture = true;
+        CardInfo touchedCard;
+        Vector2 touchedCardPosition;
+        object touchedCardOrigin;
+        int touchedCardOriginIndex;
 
         public Game1()
         {
@@ -30,6 +45,10 @@ namespace Kull.PhreeCell
 
             // 延长锁定时的电池寿命。
             InactiveSleepTime = TimeSpan.FromSeconds(1);
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 800;
+            TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.DragComplete;
         }
 
         /// <summary>
@@ -42,7 +61,31 @@ namespace Kull.PhreeCell
         {
             // TODO: 在此处添加初始化逻辑
 
-            base.Initialize();
+            for (int suit = 0; suit < CardInfo.suits.Length; suit++)
+            {
+                for (int rank = 0; rank < CardInfo.ranks.Length; rank++)
+                {
+                    CardInfo card = new CardInfo(suit, rank);
+                    deck[suit * CardInfo.ranks.Length + rank] = card;
+                }
+
+            }
+
+            for (int pile = 0; pile < 8; pile++)
+            {
+
+                piles[pile] = new List<CardInfo>();
+            }
+
+            for (int final = 0; final < 4; final++)
+            {
+                finals[final] = new List<CardInfo>();
+            }
+
+            congratsComponent = new CongratulationsComponent(this);
+            congratsComponent.Enabled = false;
+            this.Components.Add(congratsComponent);
+                base.Initialize();
         }
 
         /// <summary>
@@ -55,6 +98,10 @@ namespace Kull.PhreeCell
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: 在此处使用 this.Content 加载游戏内容
+
+            cards = this.Content.Load<Texture2D>("cards");
+            createCardSpots(cardSpots);
+            surface = createSurface(this.GraphicsDevice, cardSpots);
         }
 
         /// <summary>
@@ -78,9 +125,71 @@ namespace Kull.PhreeCell
                 this.Exit();
 
             // TODO: 在此处添加更新逻辑
+            bool checkForNextAutoMove = false;
+
+            foreach (List<CardInfo> final in finals) {
+                foreach (CardInfo card in final) {
+                    if (card.AutoMoveTime > TimeSpan.Zero) {
+                        card.AutoMoveTime -= gameTime.ElapsedGameTime;
+                        if (card.AutoMoveTime <= TimeSpan.Zero) {
+                            card.AutoMoveTime = TimeSpan.Zero;
+                            checkForNextAutoMove = true;
+                        }
+                        card.AutoMoveInterpolation = (float)card.AutoMoveTime.Ticks / AutoMoveDuration.Ticks;
+
+                    }
+                }
+                if (checkForNextAutoMove && !AnalyzeForAntoMove() && hasWon()) {
+                    congratsComponent.Enabled = true;
+                }
+            }
+
+            while (TouchPanel.IsGestureAvailable) {
+                GestureSample gesture = TouchPanel.ReadGesture();
+                Vector2 position = Vector2.Transform(gesture.Position,inverseMatrix);
+                Vector2 delta = position - Vector2.Transform(gesture.Position-gesture.Delta,inverseMatrix);
+
+                switch (gesture.GestureType) { 
+                
+                    case GestureType.Tap:
+                        if ((position - centerReplay).Length() < radiusReplay) {
+                            congratsComponent.Enabled = false;
+                            replay();
+                        }
+                        break;
+                    case GestureType.FreeDrag:
+                        if (touchedCard != null) {
+                            touchedCardPosition += delta;
+                        }
+                        else if (firstDragInGesture) {
+                            tryPickUpCard(position);
+                        }
+                        firstDragInGesture = false;
+                        break;
+                    case GestureType.DragComplete:
+                        if (touchedCard != null && tryPutDownCard(touchedCard)) {
+                            calculateDisplayMatrix();
+                            if (!AnalyzeForAntoMove() && hasWon()) {
+                                congratsComponent.Enabled = true;
+                            }
+                        }
+                        firstDragInGesture = true;
+                        touchedCard = null;
+                        break;
+                }
+            
+            }
 
             base.Update(gameTime);
         }
+
+       
+
+        
+
+        
+
+        
 
         /// <summary>
         /// 当游戏该进行自我绘制时调用此项。
@@ -91,8 +200,119 @@ namespace Kull.PhreeCell
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: 在此处添加绘图代码
+            spriteBatch.Begin(SpriteSortMode.Immediate,null,null,null,null,null,displayMatrix);
+            spriteBatch.Draw(surface,Vector2.Zero,Color.White);
 
+
+            for (int hold = 0; hold < CardInfo.suits.Length; hold++) {
+                CardInfo cardInfo = holds[hold];
+                if (cardInfo == null) continue;
+                Rectangle source = GetCardTextureSource(cardInfo);
+                Vector2 destination = new Vector2(cardSpots[hold].X,cardSpots[hold].Y);
+                spriteBatch.Draw(cards, destination, source, Color.White);
+            }
+
+            for (int pile = 0; pile < 8; pile++) { 
+              Rectangle cardSpot=cardSpots[pile];
+              for (int card = 0; card < piles[pile].Count; card++) {
+                  CardInfo cardInfo = piles[pile][card];
+                  Rectangle source = GetCardTextureSource(cardInfo);
+                  Vector2 destination = new Vector2(cardSpot.X,cardSpot.Y+card*yOverlay);
+                  spriteBatch.Draw(cards,destination,source,Color.White);
+              }
+            }
+
+            for (int pass = 0; pass < 2; pass++) {
+                for (int final = 0; final < 4; final++) {
+                    for (int card = 0; card < finals[final].Count; card++) {
+                        CardInfo cardInfo = finals[final][card];
+                        if (pass == 0 && cardInfo.AutoMoveInterpolation == 0 ||
+                            pass == 1 && cardInfo.AutoMoveInterpolation != 0
+                            ) {
+                                Rectangle source = GetCardTextureSource(cardInfo);
+                                Vector2 destination = new Vector2(cardSpots[final+4].X,cardSpots[final+4].Y)+
+                                    cardInfo.AutoMoveInterpolation*cardInfo.AutoMoveOffset
+                                    ;
+                                spriteBatch.Draw(cards, destination, source, Color.White);
+                        }
+                    }
+                }
+            }
+
+            if (touchedCard != null) {
+                Rectangle source = GetCardTextureSource(touchedCard);
+                spriteBatch.Draw(cards, touchedCardPosition, source, Color.White);
+            }
+
+                spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        private Rectangle GetCardTextureSource(CardInfo cardInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        protected override void OnDeactivated(object sender, EventArgs args)
+        {
+            base.OnDeactivated(sender, args);
+        }
+
+        protected override void OnActivated(object sender, EventArgs args)
+        {
+            base.OnActivated(sender, args);
+        }
+
+        protected void createCardSpots(Rectangle[] rects) {
+
+            int x = xMargin, y = yMargin;
+            for (int i = 0; i < 8; i++) {
+                cardSpots[i] = new Rectangle(x,y,wCard,hCard);
+                x += wCard + (i == 3 ? xMargin : xGap);
+            }
+            x = xMargin + xIndent;
+            y += hCard + yGap;
+            for (int i = 8; i < 16; i++) {
+                cardSpots[i] = new Rectangle(x,y,wCard,hCard);
+                x += wCard + xGap;
+            }
+        }
+
+
+        protected Texture2D createSurface(GraphicsDevice device, Rectangle[] rects) {
+            uint backgroudColor = new Color(0, 0, 0x60).PackedValue
+                ,outlineColor=Color.White.PackedValue
+                ,replayColor=Color.Red.PackedValue
+                ;
+            Texture2D surface = new Texture2D(device, wSurface, hSurface);
+            uint[] pixels = new uint[wSurface*hSurface];
+            for (int i = 0; i < pixels.Length; i++) {
+                Vector2 v = new Vector2(i % wSurface, i / wSurface)-centerReplay;
+                if (v.LengthSquared() < radiusReplay * radiusReplay)
+                {
+                    pixels[i] = replayColor;
+                }
+                else {
+                    pixels[i] = backgroudColor;
+                }
+            }
+
+            foreach(Rectangle rect in rects){
+                for (int x = 0; x < wCard; x++) {
+                    pixels[(rect.Top - 1) * wSurface + rect.Left + x] = outlineColor;
+                    pixels[rect.Bottom * wSurface + rect.Left + x] = outlineColor;
+                }
+
+                for (int y = 0; y < hCard; y++) {
+                    pixels[(rect.Top + y) * wSurface + rect.Left - 1] = outlineColor;
+                    pixels[(rect.Top + y) * wSurface + rect.Right] = outlineColor;
+                }
+            }
+            surface.SetData<uint>(pixels);
+                return surface;
+        }
+
+
     }
 }
