@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.PingerPaint", "Kull.PingerPaint\Kull.PingerPaint\Kull.PingerPaint.csproj", "{65F329CE-488F-4B21-BF68-E13AA9443E56}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Kull.PingerPaintContent", "Kull.PingerPaint\Kull.PingerPaintContent\Kull.PingerPaintContent.contentproj", "{D4BE4566-120B-4A2A-9B37-33EED54F7084}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{65F329CE-488F-4B21-BF68-E13AA9443E56}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{D4BE4566-120B-4A2A-9B37-33EED54F7084}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{D4BE4566-120B-4A2A-9B37-33EED54F7084}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
