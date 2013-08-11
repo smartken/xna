@@ -146,10 +146,15 @@ namespace Kull.PhreeCell
             for (int hold = 0; hold < 4; hold++)
             {
                 CardInfo cardinfo = holds[hold];
-                cardinfo.AutoMoveOffset += new Vector2(cardSpots[hold].X, cardSpots[hold].Y);
-                cardinfo.AutoMoveInterpolation = 1;
-                cardinfo.AutoMoveTime = AutoMoveDuration;
-                System.Diagnostics.Debug.WriteLine("return true 1");
+                if (cardinfo != null && checkForAutoMove(cardinfo))
+                {
+                    holds[hold] = null;
+                    cardinfo.AutoMoveOffset += new Vector2(cardSpots[hold].X, cardSpots[hold].Y);
+                    cardinfo.AutoMoveInterpolation = 1;
+                    cardinfo.AutoMoveTime = AutoMoveDuration;
+                    System.Diagnostics.Debug.WriteLine("return true 1");
+                    return true;
+                }
             }
 
             for (int pile = 0; pile < 8; pile++)
@@ -173,13 +178,16 @@ namespace Kull.PhreeCell
         private bool tryPickUpCard(Vector2 position)
         {
             for (int hold = 0; hold < 4; hold++) {
-                Point pt = cardSpots[hold].Location;
-                touchedCard = holds[hold];
-                touchedCardOrigin = holds;
-                touchedCardOriginIndex = hold;
-                touchedCardPosition = new Vector2(pt.X,pt.Y);
-                holds[hold] = null;
-                return true;
+                if (holds[hold] != null && isWithinRectangle(position, cardSpots[hold]))
+                {
+                    Point pt = cardSpots[hold].Location;
+                    touchedCard = holds[hold];
+                    touchedCardOrigin = holds;
+                    touchedCardOriginIndex = hold;
+                    touchedCardPosition = new Vector2(pt.X, pt.Y);
+                    holds[hold] = null;
+                    return true;
+                }
             }
 
             for (int pile = 0; pile < 8; pile++) {

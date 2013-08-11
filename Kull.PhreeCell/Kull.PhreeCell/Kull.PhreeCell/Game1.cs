@@ -214,7 +214,7 @@ namespace Kull.PhreeCell
             }
 
             for (int pile = 0; pile < 8; pile++) { 
-              Rectangle cardSpot=cardSpots[pile];
+              Rectangle cardSpot=cardSpots[pile+8];
               for (int card = 0; card < piles[pile].Count; card++) {
                   CardInfo cardInfo = piles[pile][card];
                   Rectangle source = GetCardTextureSource(cardInfo);
@@ -242,7 +242,7 @@ namespace Kull.PhreeCell
 
             if (touchedCard != null) {
                 Rectangle source = GetCardTextureSource(touchedCard);
-                spriteBatch.Draw(cards, touchedCardPosition, source, Color.White);
+                //spriteBatch.Draw(cards, touchedCardPosition, source, Color.White);
             }
 
                 spriteBatch.End();
@@ -336,7 +336,7 @@ namespace Kull.PhreeCell
             int x = xMargin, y = yMargin;
             for (int i = 0; i < 8; i++) {
                 cardSpots[i] = new Rectangle(x,y,wCard,hCard);
-                x += wCard + (i == 3 ? xMargin : xGap);
+                x += wCard + (i == 3 ? xMidGap : xGap);
             }
             x = xMargin + xIndent;
             y += hCard + yGap;
