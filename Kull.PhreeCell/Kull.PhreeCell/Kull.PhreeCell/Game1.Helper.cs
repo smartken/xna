@@ -206,12 +206,92 @@ namespace Kull.PhreeCell
 
         private bool tryPutDownCard(CardInfo touchedCard)
         {
+            Vector2 cardCenter = new Vector2(touchedCardPosition.X+wCard/2
+                  , touchedCardPosition.Y + hCard / 2
+                );
+            for (int cardspot = 0; cardspot < 16; cardspot++)
+            {
+                Rectangle rect = cardSpots[cardspot];
+                if (cardspot >= 8)
+                {
+                    rect.Inflate(0, hSurface - rect.Bottom);
+                }
+
+                if (isWithinRectangle(cardCenter, rect))
+                {
+
+                    if (cardspot < 4)
+                    {
+                        int hold = cardspot;
+                        if (holds[hold] == null)
+                        {
+                            holds[hold] = touchedCard;
+                            return true;
+                        }
+
+                    }
+                    else if (cardspot < 8)
+                    {
+                        int final = cardspot - 4;
+                        if (topCard(finals[final]) == null)
+                        {
+                            if (touchedCard.Rank == 0)
+                            {
+                                finals[final].Add(touchedCard);
+                                return true;
+                            }
+
+                        }
+                        else if (touchedCard.Suit == topCard(finals[final]).Suit &&
+                            touchedCard.Rank == topCard(finals[final]).Rank + 1
+                           )
+                        {
+                            finals[final].Add(touchedCard);
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        int pile = cardspot - 8;
+
+                        if (piles[pile].Count == 0)
+                        {
+                            piles[pile].Add(touchedCard);
+                            return true;
+                        }
+                        else
+                        {
+                            CardInfo topcardp = topCard(piles[pile]);
+                            if (touchedCard.Suit < 2 != topcardp.Suit < 2
+                                && touchedCard.Rank == topcardp.Rank - 1
+                                )
+                            {
+                                piles[pile].Add(touchedCard);
+                                return true;
+                            }
+                        }
+
+                    }
+                    break;
+                }
+            }
+
+            if (touchedCardOrigin is CardInfo[])
+            {
+                (touchedCardOrigin as CardInfo[])[touchedCardOriginIndex] = touchedCard;
+            }
+            else if(touchedCardOrigin is List<CardInfo>[])
+            {
+                (touchedCardOrigin as List<CardInfo>[])[touchedCardOriginIndex].Add(touchedCard);
+
+            }
             return false;
+
         }
 
         private Rectangle GetCardTextureSource(CardInfo cardInfo)
         {
-            throw new NotImplementedException();
+            return new Rectangle(wCard * cardInfo.Rank, hCard * cardInfo.Suit, wCard, hCard);
         }
     }
 }

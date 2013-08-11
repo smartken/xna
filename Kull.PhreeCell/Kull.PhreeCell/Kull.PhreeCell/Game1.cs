@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Phone.Shell;
 
 namespace Kull.PhreeCell
 {
@@ -248,19 +249,85 @@ namespace Kull.PhreeCell
             base.Draw(gameTime);
         }
 
-        private Rectangle GetCardTextureSource(CardInfo cardInfo)
-        {
-            throw new NotImplementedException();
-        }
+      
 
 
         protected override void OnDeactivated(object sender, EventArgs args)
         {
-            base.OnDeactivated(sender, args);
+            PhoneApplicationService appService = PhoneApplicationService.Current;
+            List<int>[] piles = new List<int>[8];
+            for (int i = 0; i < piles.Length; i++) {
+                piles[i] = new List<int>();
+                foreach (CardInfo cardinof in this.piles[i]) {
+                    piles[i].Add(13*cardinof.Suit+cardinof.Rank);
+                }
+            }
+            appService.State["piles"] = piles;
+
+            List<int>[] finals = new List<int>[4];
+
+            for (int i = 0; i < finals.Length; i++) {
+                finals[i] = new List<int>();
+                foreach (CardInfo cardinfo in this.finals[i]) {
+                    finals[i].Add(13*cardinfo.Suit+cardinfo.Rank);
+                }
+            }
+            appService.State["finals"] = finals;
+
+            int[] holds = new int[4];
+
+            for (int i = 0; i < holds.Length; i++) {
+                if (this.holds[i] == null)
+                {
+                    holds[i] = -1;
+                }
+                else {
+                    holds[i] = CardInfo.ranks.Length * this.holds[i].Suit + this.holds[i].Rank;
+                }
+            }
+            appService.State["holds"] = holds;
+            base.OnDeactivated(sender,args);
         }
 
         protected override void OnActivated(object sender, EventArgs args)
         {
+            PhoneApplicationService appService = PhoneApplicationService.Current;
+            if (appService.State.ContainsKey("piles"))
+            {
+                List<int>[] piles = appService.State["piles"] as List<int>[];
+
+                for (int i = 0; i < piles.Length; i++)
+                {
+                    foreach (int cardindex in piles[i])
+                    {
+                        this.piles[i].Add(deck[cardindex]);
+                    }
+                }
+
+                List<int>[] finals = appService.State["finals"] as List<int>[];
+
+                for (int i = 0; i < finals.Length; i++)
+                {
+                    foreach (int cardindex in finals[i])
+                    {
+                        this.finals[i].Add(deck[cardindex]);
+                    }
+                }
+                int[] holds = appService.State["holds"] as int[];
+
+                for (int i = 0; i < holds.Length; i++)
+                {
+                    if (holds[i] != -1)
+                    {
+                        this.holds[i] = deck[holds[i]];
+                    }
+
+                }
+                calculateDisplayMatrix();
+            }
+            else {
+                replay();
+            }
             base.OnActivated(sender, args);
         }
 
