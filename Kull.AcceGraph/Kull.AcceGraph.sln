@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.AcceGraph", "Kull.AcceGraph\Kull.AcceGraph\Kull.AcceGraph.csproj", "{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Kull.AcceGraphContent", "Kull.AcceGraph\Kull.AcceGraphContent\Kull.AcceGraphContent.contentproj", "{DA0CBD96-0246-455B-9DA0-896117A4CE56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{2385E477-1DF6-4701-BD0E-F1F22C3B2FFA}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{DA0CBD96-0246-455B-9DA0-896117A4CE56}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{DA0CBD96-0246-455B-9DA0-896117A4CE56}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
