@@ -93,36 +93,6 @@ namespace Kull.Petzold
             // TODO: 在此处取消加载任何非 ContentManager 内容
         }
 
-        /// <summary>
-        /// 允许游戏运行逻辑，例如更新全部内容、
-        /// 检查冲突、收集输入信息以及播放音频。
-        /// </summary>
-        /// <param name="gameTime">提供计时值的快照。</param>
-        protected override void Update(GameTime gameTime)
-        {
-            // 允许游戏退出
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-             //   this.Exit();
-
-            // TODO: 在此处添加更新逻辑
-            
-
-            
-
-            base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// 当游戏该进行自我绘制时调用此项。
-        /// </summary>
-        /// <param name="gameTime">提供计时值的快照。</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.Navy);
-            spriteBatch.Begin();
-            spriteBatch.Draw(ball, ballPosition, null, Color.Pink, 0, ballCenter, 1f / BALL_SCALE, SpriteEffects.None, 0);
-            spriteBatch.End();
-            base.Draw(gameTime);
-        }
+      
     }
 }

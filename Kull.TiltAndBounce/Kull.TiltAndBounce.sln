@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.TiltAndBounce", "Kull.TiltAndBounce\Kull.TiltAndBounce\Kull.TiltAndBounce.csproj", "{D80E9254-C5E7-44E8-A75D-37E5D458C181}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Kull.TiltAndBounceContent", "Kull.TiltAndBounce\Kull.TiltAndBounceContent\Kull.TiltAndBounceContent.contentproj", "{78C97212-2AA8-4D2F-A1B3-477AD890C0AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.Petzold", "..\Kull.Petzold\Kull.Petzold\Kull.Petzold.csproj", "{C4D24365-097B-4318-BE88-84222CA0F0F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Debug|Windows Phone.Deploy.0 = Debug|Windows Phone
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Release|Windows Phone.Build.0 = Release|Windows Phone
+		{D80E9254-C5E7-44E8-A75D-37E5D458C181}.Release|Windows Phone.Deploy.0 = Release|Windows Phone
+		{78C97212-2AA8-4D2F-A1B3-477AD890C0AD}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{78C97212-2AA8-4D2F-A1B3-477AD890C0AD}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Release|Windows Phone.Build.0 = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
