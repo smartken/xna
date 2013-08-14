@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kull.Petzold", "Kull.Petzold\Kull.Petzold.csproj", "{C4D24365-097B-4318-BE88-84222CA0F0F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{C4D24365-097B-4318-BE88-84222CA0F0F5}.Release|Windows Phone.Build.0 = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
